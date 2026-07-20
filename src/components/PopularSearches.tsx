@@ -21,7 +21,7 @@ export default function PopularSearches() {
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="border-[12px] border-[#d4dbd2] rounded-lg bg-white p-8 lg:p-12">
+        <div className="border-[12px] border-[#d4dbd2] bg-white p-8 lg:p-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
             Buscas mais populares
           </h2>

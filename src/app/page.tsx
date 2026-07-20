@@ -4,6 +4,7 @@ import RentSection from "@/components/RentSection";
 import BuySection from "@/components/BuySection";
 import ConsortiumSection from "@/components/ConsortiumSection";
 import FinancingSection from "@/components/FinancingSection";
+import LocationsSection from "@/components/LocationsSection";
 import PopularSearches from "@/components/PopularSearches";
 import Footer from "@/components/Footer";
 
@@ -17,6 +18,7 @@ export default function Home() {
         <BuySection />
         <ConsortiumSection />
         <FinancingSection />
+        <LocationsSection />
         <PopularSearches />
       </main>
       <Footer />

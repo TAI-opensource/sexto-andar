@@ -43,7 +43,7 @@ export default function Hero() {
 
       {/* Search Form */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="border border-gray-200 rounded-lg p-6 md:p-8">
+        <div className="border border-gray-200 p-6 md:p-8">
           {/* Title */}
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
             Alugue um lar
@@ -84,7 +84,7 @@ export default function Hero() {
           {/* Search Fields */}
           <div className="space-y-4">
             {/* Cidade */}
-            <div className="flex items-center gap-3 border border-gray-300 rounded-lg p-4">
+            <div className="flex items-center gap-3 border border-gray-300 p-4">
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -96,7 +96,7 @@ export default function Hero() {
             </div>
 
             {/* Bairro */}
-            <div className="flex items-center gap-3 border border-gray-300 rounded-lg p-4">
+            <div className="flex items-center gap-3 border border-gray-300 p-4">
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
               </svg>
@@ -108,7 +108,7 @@ export default function Hero() {
 
             {/* Valor e Quartos */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center justify-between border border-gray-300 rounded-lg p-4">
+              <div className="flex items-center justify-between border border-gray-300 p-4">
                 <div className="flex items-center gap-3">
                   <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -123,7 +123,7 @@ export default function Hero() {
                 </svg>
               </div>
 
-              <div className="flex items-center justify-between border border-gray-300 rounded-lg p-4">
+              <div className="flex items-center justify-between border border-gray-300 p-4">
                 <div className="flex items-center gap-3">
                   <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -142,7 +142,7 @@ export default function Hero() {
 
           {/* Search Button */}
           <div className="mt-6">
-            <button className="w-full bg-primary text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-colors">
+            <button className="w-full bg-primary text-white py-4 px-8 font-semibold text-lg hover:bg-primary-dark transition-colors">
               Buscar imóveis
             </button>
           </div>

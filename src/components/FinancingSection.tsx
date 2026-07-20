@@ -55,7 +55,7 @@ export default function FinancingSection() {
             />
 
             {/* White box overlay */}
-            <div className="absolute top-6 left-6 bg-white rounded-lg p-6 max-w-[280px]">
+            <div className="absolute top-6 left-6 bg-white p-6 max-w-[280px]">
               <h3 className="text-2xl font-bold text-foreground mb-3 leading-tight">
                 {card.title}
               </h3>
