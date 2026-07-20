@@ -336,7 +336,7 @@ export default function SearchResultsPage() {
                             <p
                               className="text-sm text-gray-600 mb-3 line-clamp-2"
                               dangerouslySetInnerHTML={{
-                                __html: property.endereco || "",
+                                __html: property.titulo_linha || property.titulo_plain || "",
                               }}
                             />
                             <div className="flex items-center gap-3 text-xs text-gray-600">
