@@ -62,7 +62,7 @@ export default function FinancingSection() {
               <p className="text-sm text-gray-600 mb-4">
                 {card.description}
               </p>
-              <a href="#" className="text-amber-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline">
+              <a href="#" className="text-slate-700 font-semibold text-sm inline-flex items-center gap-1 hover:underline">
                 {card.cta}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -100,16 +100,16 @@ export default function FinancingSection() {
           </div>
 
           {/* Right side - Vibrant amber background with text */}
-          <div className="bg-amber-500 p-8 lg:p-10 flex flex-col justify-center">
+          <div className="bg-[#2d3748] p-8 lg:p-10 flex flex-col justify-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
               Financie seu imóvel com nossa assessoria
             </h2>
-            <p className="text-lg text-amber-100 mb-8">
+            <p className="text-lg text-gray-300 mb-8">
               Aqui você pode contar com a nossa ajuda para financiar seu imóvel de forma prática. Ainda buscamos as melhores taxas para você!
             </p>
             <a
               href="#conhecer-assessoria"
-              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-amber-500 transition-colors text-center inline-block w-fit mb-6"
+              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-[#2d3748] transition-colors text-center inline-block w-fit mb-6"
             >
               Conhecer a assessoria
             </a>

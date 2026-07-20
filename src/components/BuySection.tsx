@@ -62,7 +62,7 @@ export default function BuySection() {
               <p className="text-sm text-gray-600 mb-4">
                 {card.description}
               </p>
-              <a href="#" className="text-emerald-600 font-semibold text-sm inline-flex items-center gap-1 hover:underline">
+              <a href="#" className="text-emerald-800 font-semibold text-sm inline-flex items-center gap-1 hover:underline">
                 {card.cta}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -100,7 +100,7 @@ export default function BuySection() {
           </div>
 
           {/* Right side - Vibrant green background with text */}
-          <div className="bg-emerald-500 p-8 lg:p-10 flex flex-col justify-center">
+          <div className="bg-[#1b4332] p-8 lg:p-10 flex flex-col justify-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
               Comprar seu imóvel e ter um cantinho só seu
             </h2>
@@ -109,7 +109,7 @@ export default function BuySection() {
             </p>
             <a
               href="#buscar"
-              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-emerald-500 transition-colors text-center inline-block w-fit mb-6"
+              className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-[#1b4332] transition-colors text-center inline-block w-fit mb-6"
             >
               Ver apartamentos à venda
             </a>
