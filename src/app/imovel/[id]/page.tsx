@@ -183,11 +183,11 @@ export default function PropertyDetailsPage() {
                   <span className="bg-primary text-white px-3 py-1 text-xs font-medium rounded">
                     {property.categoria_nome}
                   </span>
-                  <span className="bg-blue-500 text-white px-3 py-1 text-xs font-medium rounded">
+                  <span className="bg-[#1a365d] text-white px-3 py-1 text-xs font-medium rounded">
                     {property.transacao}
                   </span>
                   {property.estado_imovel_txt && (
-                    <span className="bg-green-500 text-white px-3 py-1 text-xs font-medium rounded">
+                    <span className="bg-[#1b4332] text-white px-3 py-1 text-xs font-medium rounded">
                       {property.estado_imovel_txt}
                     </span>
                   )}
@@ -571,13 +571,13 @@ export default function PropertyDetailsPage() {
                   {property.valor_avaliacao_txt && (
                     <div className="text-sm text-gray-500">
                       <span className="line-through">{property.valor_avaliacao_txt}</span>
-                      <span className="ml-2 text-green-600 font-medium">
+                      <span className="ml-2 text-[#1b4332] font-medium">
                         Avaliação
                       </span>
                     </div>
                   )}
                   {discount > 0 && (
-                    <div className="text-green-600 font-medium mt-1">
+                    <div className="text-[#1b4332] font-medium mt-1">
                       {discount}% de desconto
                     </div>
                   )}
@@ -585,7 +585,7 @@ export default function PropertyDetailsPage() {
 
                 <a
                   href="/fale-conosco"
-                  className="w-full bg-[#34af6e] text-white py-4 font-semibold text-lg hover:bg-[#2d9a5f] transition-colors mb-4 rounded-lg flex items-center justify-center gap-2"
+                  className="w-full bg-[#1b4332] text-white py-4 font-semibold text-lg hover:bg-[#143526] transition-colors mb-4 rounded-lg flex items-center justify-center gap-2"
                 >
                   Tenho interesse
                 </a>

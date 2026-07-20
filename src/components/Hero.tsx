@@ -172,7 +172,7 @@ export default function Hero() {
                 {/* Search Button */}
                 <button
                   onClick={handleSearch}
-                  className="w-full bg-[#34af6e] text-white py-3.5 px-6 font-semibold rounded-xl hover:bg-[#2d9a5f] transition-colors"
+                  className="w-full bg-[#1b4332] text-white py-3.5 px-6 font-semibold rounded-xl hover:bg-[#143526] transition-colors"
                 >
                   Buscar imóveis
                 </button>
