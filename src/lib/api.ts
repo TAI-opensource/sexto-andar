@@ -1,26 +1,65 @@
 const API_BASE = "https://reidoape.com.br/api";
 
+export interface PriceDetail {
+  tipo: string;
+  valor: string;
+  label: string;
+  destaque: boolean;
+  riscado: boolean;
+}
+
 export interface Property {
   id_master: number;
+  id: string;
   foto: string;
+  fotos: string[];
   categoria: string;
   categoria_nome: string;
   transacao: string;
+  transacao_tag: string;
+  tipo: string;
   valor_venda1: string;
   valorLocacao: string;
+  valorLocacaoDia: string;
+  valor_avaliacao_txt: string;
+  precos: PriceDetail[];
   quartos: string;
+  quartos_txt: string;
   banheiros: string;
+  banheiros_txt: string;
   vagas: string;
+  vagas_txt: string;
+  suites: string;
+  suites_txt: string;
   area_total: string;
+  area_total_caixa: string;
   area_privativa: string;
+  area_privativa_caixa: string;
+  area_util: string;
+  area_terreno: string;
+  area_terreno_caixa: string;
+  area_m2: string;
   desconto_pct: string;
-  endereco: string;
-  bairro: string;
   cidade: string;
   estado: string;
+  bairro: string;
+  estadoImovel: string;
+  estado_imovel_txt: string;
   referencia_plain: string;
-  descricao: string;
-  link: string;
+  ref_caixa: string;
+  titulo_plain: string;
+  titulo_linha: string;
+  subtitulo_plain: string;
+  enderecoPermissao: string;
+  bairroPermissao: string;
+  numeroPermissao: string;
+  descricao_html: string;
+  mostrar_mapa: string;
+  map_geocode_queries: string[];
+  map_lat: number | null;
+  map_lon: number | null;
+  leilao_pracas: unknown[];
+  leilao_ativo: boolean;
 }
 
 export interface ApiResponse {
@@ -43,13 +82,15 @@ export interface SearchFilters {
   limite?: number;
 }
 
-function stripHtml(html: string): string {
+export function stripHtml(html: string): string {
+  if (!html) return "";
   return html
     .replace(/<[^>]*>/g, "")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
+    .replace(/\s+/g, " ")
     .trim();
 }
 
@@ -115,9 +156,46 @@ export function parseBedrooms(bedroomsHtml: string): number {
 }
 
 export function getDiscountPercentage(property: Property): number {
-  const cleaned = stripHtml(property.desconto_pct || "");
-  const match = cleaned.match(/(\d+)/);
-  return match ? parseInt(match[1]) : 0;
+  if (property.desconto_pct) {
+    const cleaned = stripHtml(property.desconto_pct);
+    const match = cleaned.match(/(\d+)/);
+    if (match) return parseInt(match[1]);
+  }
+
+  if (property.valor_avaliacao_txt && property.valor_venda1) {
+    const avaliacao = parsePrice(property.valor_avaliacao_txt);
+    const venda = parsePrice(property.valor_venda1);
+    if (avaliacao > 0 && venda > 0) {
+      return Math.round(((avaliacao - venda) / avaliacao) * 100);
+    }
+  }
+
+  return 0;
+}
+
+export function getFullAddress(property: Property): string {
+  const parts: string[] = [];
+  if (property.enderecoPermissao) {
+    parts.push(stripHtml(property.enderecoPermissao));
+  }
+  if (property.numeroPermissao) {
+    parts.push(stripHtml(property.numeroPermissao));
+  }
+  if (property.bairroPermissao) {
+    parts.push(stripHtml(property.bairroPermissao));
+  }
+  if (parts.length === 0) {
+    if (property.bairro) parts.push(property.bairro);
+    if (property.cidade) parts.push(property.cidade);
+  }
+  return parts.join(", ").replace(/^,\s*/, "").replace(/,\s*$/, "");
+}
+
+export function getMapQuery(property: Property): string {
+  if (property.map_geocode_queries && property.map_geocode_queries.length > 0) {
+    return property.map_geocode_queries[0];
+  }
+  return getFullAddress(property);
 }
 
 export const categories = [
