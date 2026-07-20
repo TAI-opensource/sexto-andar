@@ -16,6 +16,44 @@ interface Property {
   isHighlighted?: boolean;
 }
 
+interface Neighborhood {
+  name: string;
+  propertyCount: number;
+  avgPrice: number;
+}
+
+const neighborhoods: Neighborhood[] = [
+  { name: "Vila Mariana", propertyCount: 21700, avgPrice: 3300 },
+  { name: "Brooklin", propertyCount: 19853, avgPrice: 3809 },
+  { name: "Jardim Paulista", propertyCount: 19079, avgPrice: 5000 },
+  { name: "Pinheiros", propertyCount: 15420, avgPrice: 4200 },
+  { name: "Consolação", propertyCount: 12300, avgPrice: 3100 },
+  { name: "Moema", propertyCount: 11800, avgPrice: 4500 },
+];
+
+const faqItems = [
+  {
+    question: "Como alugar um imóvel na Siena?",
+    answer: "É simples! Escolha o imóvel que deseja, agende uma visita online ou presencial, envie seus documentos e assine o contrato digitalmente. Todo o processo é feito de forma rápida e segura.",
+  },
+  {
+    question: "Preciso de fiador para alugar?",
+    answer: "Não! Na Siena você não precisa de fiador. Oferecemos opções de seguro-fiança que facilitam ainda mais o processo de locação.",
+  },
+  {
+    question: "Quanto tempo demora o processo de aluguel?",
+    answer: "O processo médio leva de 7 a 15 dias úteis, desde a aprovação dos documentos até a assinatura do contrato e entrega das chaves.",
+  },
+  {
+    question: "Posso agendar uma visita presencial?",
+    answer: "Sim! Você pode agendar visitas presenciais diretamente pelo nosso sistema. Escolha o dia e horário que melhor se encaixa na sua rotina.",
+  },
+  {
+    question: "Quais documentos são necessários?",
+    answer: "RG ou CNH, comprovante de renda (3x o valor do aluguel), comprovante de residência e extrato bancário dos últimos 3 meses.",
+  },
+];
+
 const mockProperties: Property[] = [
   {
     id: 1,
@@ -103,6 +141,7 @@ const mockProperties: Property[] = [
 export default function SearchResultsPage() {
   const [priceRange, setPriceRange] = useState<string>("");
   const [bedrooms, setBedrooms] = useState<string>("");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -145,6 +184,36 @@ export default function SearchResultsPage() {
                   <option value="4">4+</option>
                 </select>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Neighborhoods Section */}
+        <div className="bg-white border-b border-gray-200 py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-lg font-bold text-foreground mb-6">
+              Bairros recomendados para alugar imóveis em São Paulo
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {neighborhoods.map((neighborhood, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow"
+                >
+                  <h3 className="font-bold text-foreground text-lg mb-2">
+                    {neighborhood.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {neighborhood.propertyCount.toLocaleString("pt-BR")} imóveis para alugar.
+                  </p>
+                  <div className="text-sm text-gray-500">
+                    <span className="block">Valor médio</span>
+                    <span className="font-medium text-foreground">
+                      R$ {neighborhood.avgPrice.toLocaleString("pt-BR")}/mês
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -346,6 +415,52 @@ export default function SearchResultsPage() {
                   Próximo →
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ Accordion Section */}
+        <div className="bg-white border-t border-gray-200 py-12">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-foreground mb-8">
+              Perguntas frequentes sobre aluguel
+            </h2>
+            <div className="space-y-4">
+              {faqItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-200"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full flex items-center justify-between p-4 text-left"
+                  >
+                    <span className="font-medium text-foreground">
+                      {item.question}
+                    </span>
+                    <svg
+                      className={`w-5 h-5 text-gray-500 transition-transform ${
+                        openFaq === index ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-4 pb-4 text-gray-600">
+                      {item.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
