@@ -193,7 +193,7 @@ export default function SearchResultsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Filters Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white p-6 border border-gray-200 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
+              <div className="bg-[#f0f0f2] p-6 border border-gray-200 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
                 <h2 className="text-lg font-bold text-foreground mb-6">
                   Filtros
                 </h2>

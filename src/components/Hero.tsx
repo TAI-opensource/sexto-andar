@@ -43,7 +43,7 @@ export default function Hero() {
 
       {/* Search Form */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="border border-gray-200 p-6 md:p-8">
+        <div className="bg-[#f0f0f2] p-6 md:p-8">
           {/* Title */}
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
             Alugue um lar
