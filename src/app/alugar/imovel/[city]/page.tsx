@@ -1,0 +1,357 @@
+"use client";
+
+import { useState } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+interface Property {
+  id: number;
+  title: string;
+  address: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  image: string;
+  isHighlighted?: boolean;
+}
+
+const mockProperties: Property[] = [
+  {
+    id: 1,
+    title: "Apartamento com 2 quartos",
+    address: "Rua Augusta, 1500 - Consolação, São Paulo",
+    price: 3500,
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 65,
+    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop",
+    isHighlighted: true,
+  },
+  {
+    id: 2,
+    title: "Studio mobiliado",
+    address: "Rua Oscar Freire, 300 - Jardins, São Paulo",
+    price: 2800,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 35,
+    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop",
+  },
+  {
+    id: 3,
+    title: "Apartamento com 3 quartos",
+    address: "Av. Paulista, 1000 - Bela Vista, São Paulo",
+    price: 5500,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 120,
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop",
+  },
+  {
+    id: 4,
+    title: "Kitnet compacta",
+    address: "Rua da Consolação, 500 - Consolação, São Paulo",
+    price: 1800,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: 25,
+    image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&h=400&fit=crop",
+  },
+  {
+    id: 5,
+    title: "Casa com 3 quartos",
+    address: "Rua dos Pinheiros, 800 - Pinheiros, São Paulo",
+    price: 8000,
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 200,
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop",
+  },
+  {
+    id: 6,
+    title: "Apartamento moderno",
+    address: "Rua Haddock Lobo, 400 - Cerqueira César, São Paulo",
+    price: 4200,
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 85,
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop",
+  },
+  {
+    id: 7,
+    title: "Cobertura duplex",
+    address: "Rua Artur de Azevedo, 120 - Pinheiros, São Paulo",
+    price: 12000,
+    bedrooms: 4,
+    bathrooms: 4,
+    area: 300,
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop",
+  },
+  {
+    id: 8,
+    title: "Apartamento com varanda",
+    address: "Rua Bela Cintra, 700 - Consolação, São Paulo",
+    price: 3800,
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 75,
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=400&fit=crop",
+  },
+];
+
+export default function SearchResultsPage() {
+  const [priceRange, setPriceRange] = useState<string>("");
+  const [bedrooms, setBedrooms] = useState<string>("");
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <Header />
+
+      <main className="flex-1">
+        {/* Search Header */}
+        <div className="bg-white border-b border-gray-200 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <h1 className="text-xl font-bold text-foreground">
+                  Imóveis para alugar em São Paulo, SP
+                </h1>
+                <p className="text-sm text-gray-600 mt-1">
+                  {mockProperties.length} imóveis encontrados
+                </p>
+              </div>
+              <div className="flex items-center gap-4">
+                <select
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(e.target.value)}
+                  className="border border-gray-300 px-4 py-2 text-sm"
+                >
+                  <option value="">Valor total até</option>
+                  <option value="2000">R$ 2.000</option>
+                  <option value="3000">R$ 3.000</option>
+                  <option value="5000">R$ 5.000</option>
+                  <option value="10000">R$ 10.000</option>
+                </select>
+                <select
+                  value={bedrooms}
+                  onChange={(e) => setBedrooms(e.target.value)}
+                  className="border border-gray-300 px-4 py-2 text-sm"
+                >
+                  <option value="">Quartos</option>
+                  <option value="1">1+</option>
+                  <option value="2">2+</option>
+                  <option value="3">3+</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Filters Sidebar */}
+            <div className="lg:col-span-1">
+              <div className="bg-white p-6 border border-gray-200">
+                <h2 className="text-lg font-bold text-foreground mb-6">
+                  Filtros
+                </h2>
+
+                {/* Price Filter */}
+                <div className="mb-6">
+                  <h3 className="font-medium text-foreground mb-3">
+                    Valor total até
+                  </h3>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="price" className="w-4 h-4" />
+                      <span className="text-sm">R$ 1.500</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="price" className="w-4 h-4" />
+                      <span className="text-sm">R$ 2.000</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="price" className="w-4 h-4" />
+                      <span className="text-sm">R$ 3.000</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="price" className="w-4 h-4" />
+                      <span className="text-sm">R$ 5.000</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="radio" name="price" className="w-4 h-4" />
+                      <span className="text-sm">R$ 10.000</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Bedrooms Filter */}
+                <div className="mb-6">
+                  <h3 className="font-medium text-foreground mb-3">
+                    Quartos
+                  </h3>
+                  <div className="flex gap-2">
+                    <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                      1+
+                    </button>
+                    <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                      2+
+                    </button>
+                    <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                      3+
+                    </button>
+                    <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                      4+
+                    </button>
+                  </div>
+                </div>
+
+                {/* Property Type Filter */}
+                <div className="mb-6">
+                  <h3 className="font-medium text-foreground mb-3">
+                    Tipo de imóvel
+                  </h3>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Apartamento</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Casa</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Kitnet</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Studio</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Cobertura</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Amenities Filter */}
+                <div className="mb-6">
+                  <h3 className="font-medium text-foreground mb-3">
+                    Comodidades
+                  </h3>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Mobiliado</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Aceita pets</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Estacionamento</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Piscina</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="w-4 h-4" />
+                      <span className="text-sm">Academia</span>
+                    </label>
+                  </div>
+                </div>
+
+                <button className="w-full bg-primary text-white py-3 font-medium hover:bg-primary-dark transition-colors">
+                  Aplicar filtros
+                </button>
+              </div>
+            </div>
+
+            {/* Property Listings */}
+            <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {mockProperties.map((property) => (
+                  <div
+                    key={property.id}
+                    className="bg-white border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                  >
+                    {/* Property Image */}
+                    <div className="relative h-48">
+                      <img
+                        src={property.image}
+                        alt={property.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {property.isHighlighted && (
+                        <div className="absolute top-2 left-2 bg-primary text-white px-2 py-1 text-xs font-medium">
+                          Destaque
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Property Info */}
+                    <div className="p-4">
+                      <div className="text-lg font-bold text-foreground mb-1">
+                        R$ {property.price.toLocaleString("pt-BR")}/mês
+                      </div>
+                      <h3 className="font-medium text-foreground mb-2">
+                        {property.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-3">
+                        {property.address}
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                          </svg>
+                          {property.bedrooms} {property.bedrooms === 1 ? "quarto" : "quartos"}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                          </svg>
+                          {property.bathrooms} {property.bathrooms === 1 ? "banheiro" : "banheiros"}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                          </svg>
+                          {property.area}m²
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              <div className="mt-8 flex justify-center gap-2">
+                <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                  1
+                </button>
+                <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                  2
+                </button>
+                <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                  3
+                </button>
+                <button className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors">
+                  Próximo →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
