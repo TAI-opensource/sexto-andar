@@ -442,6 +442,102 @@ export default function PropertyDetailsPage() {
                 </div>
               )}
 
+              {/* Documentation */}
+              {property.ref_caixa && (
+                <div className="mb-8">
+                  <h2 className="text-lg font-bold text-foreground mb-4">
+                    Documentação
+                  </h2>
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-3">
+                    <a
+                      href={`https://venda-imoveis.caixa.gov.br/editais/matricula/${property.estado}/${property.ref_caixa}.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 text-primary hover:underline"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                      Baixar matrícula do imóvel
+                    </a>
+                    <a
+                      href={`https://venda-imoveis.caixa.gov.br/sistema/detalhe-imovel.asp?hdnimovel=${property.ref_caixa}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 text-primary hover:underline"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                      Ver imóvel no site da Caixa
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              {/* Payment Conditions */}
+              {property.ref_caixa && (
+                <div className="mb-8">
+                  <h2 className="text-lg font-bold text-foreground mb-4">
+                    Condições de pagamento
+                  </h2>
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-4 text-sm text-gray-600">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-2">
+                        Formas de pagamento aceitas:
+                      </h3>
+                      <ul className="list-disc list-inside space-y-1">
+                        <li>Recursos próprios</li>
+                        <li>
+                          Permite utilização de FGTS. Consulte condições e
+                          enquadramento.
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-2">
+                        Regras para pagamento das despesas:
+                      </h3>
+                      <ul className="list-disc list-inside space-y-1">
+                        <li>
+                          <strong>Condomínio:</strong> Sob responsabilidade do
+                          comprador, até o limite de 10% em relação ao valor de
+                          avaliação do imóvel. A CAIXA realizará o pagamento
+                          apenas do valor que exceder o limite de 10% do valor
+                          de avaliação.
+                        </li>
+                        <li>
+                          <strong>Tributos:</strong> Sob responsabilidade do
+                          comprador, quando o débito for inferior a 10% do valor
+                          de avaliação. A CAIXA paga integralmente quando o
+                          débito for superior a 10% do valor de avaliação.
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Location */}
               <div className="mb-8">
                 <h2 className="text-lg font-bold text-foreground mb-4">
