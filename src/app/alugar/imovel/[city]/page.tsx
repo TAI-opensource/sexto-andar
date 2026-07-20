@@ -188,42 +188,12 @@ export default function SearchResultsPage() {
           </div>
         </div>
 
-        {/* Neighborhoods Section */}
-        <div className="bg-white border-b border-gray-200 py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-lg font-bold text-foreground mb-6">
-              Bairros recomendados para alugar imóveis em São Paulo
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {neighborhoods.map((neighborhood, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-shadow"
-                >
-                  <h3 className="font-bold text-foreground text-lg mb-2">
-                    {neighborhood.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {neighborhood.propertyCount.toLocaleString("pt-BR")} imóveis para alugar.
-                  </p>
-                  <div className="text-sm text-gray-500">
-                    <span className="block">Valor médio</span>
-                    <span className="font-medium text-foreground">
-                      R$ {neighborhood.avgPrice.toLocaleString("pt-BR")}/mês
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         {/* Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Filters Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white p-6 border border-gray-200">
+              <div className="bg-white p-6 border border-gray-200 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
                 <h2 className="text-lg font-bold text-foreground mb-6">
                   Filtros
                 </h2>
@@ -415,6 +385,36 @@ export default function SearchResultsPage() {
                   Próximo →
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Neighborhoods Section */}
+        <div className="bg-white border-t border-gray-200 py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-lg font-bold text-foreground mb-6">
+              Bairros recomendados para alugar imóveis em São Paulo
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {neighborhoods.map((neighborhood, index) => (
+                <div
+                  key={index}
+                  className="bg-[#f0f0f2] p-4 cursor-pointer hover:shadow-md transition-shadow"
+                >
+                  <h3 className="font-bold text-foreground text-lg mb-2">
+                    {neighborhood.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {neighborhood.propertyCount.toLocaleString("pt-BR")} imóveis para alugar.
+                  </p>
+                  <div className="text-sm text-gray-500">
+                    <span className="block">Valor médio</span>
+                    <span className="font-medium text-foreground">
+                      R$ {neighborhood.avgPrice.toLocaleString("pt-BR")}/mês
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
