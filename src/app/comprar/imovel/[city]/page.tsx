@@ -68,9 +68,12 @@ export default function SearchResultsPage() {
 
         const data = await searchProperties(searchFilters);
         if (cancelled) return;
-        setProperties(data.items);
+        const validItems = (data.items || []).filter(
+          (p) => p.id_master && p.id_master !== 0
+        );
+        setProperties(validItems);
 
-        let filtered = data.items;
+        let filtered = validItems;
 
         if (precoMax > 0) {
           filtered = filtered.filter((p) => {
