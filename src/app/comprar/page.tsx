@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import Header from "@/components/Header";
@@ -18,7 +18,7 @@ import {
   type SearchFilters,
 } from "@/lib/api";
 
-export default function ComprarPage() {
+function ComprarContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -432,5 +432,13 @@ export default function ComprarPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ComprarPage() {
+  return (
+    <Suspense>
+      <ComprarContent />
+    </Suspense>
   );
 }
