@@ -97,6 +97,14 @@ export default function SearchResultsPage() {
           });
         }
 
+        if (selectedSort === "menor_valor") {
+          filtered.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
+        } else if (selectedSort === "maior_valor") {
+          filtered.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
+        } else if (selectedSort === "maior_desconto") {
+          filtered.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
+        }
+
         setFilteredProperties(filtered);
         setTotal(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filtered.length : data.meta.total);
       } catch (error) {
