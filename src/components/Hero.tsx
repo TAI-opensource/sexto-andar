@@ -1,10 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+const cities = [
+  "São Paulo",
+  "Rio de Janeiro",
+  "Belo Horizonte",
+  "Curitiba",
+  "Porto Alegre",
+  "Florianópolis",
+  "Brasília",
+  "Salvador",
+  "Recife",
+  "Fortaleza",
+];
 
 export default function Hero() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"alugar" | "comprar">("alugar");
   const [activeSection, setActiveSection] = useState<"buscar" | "anunciar">("buscar");
+  const [selectedCity, setSelectedCity] = useState("");
 
   return (
     <section className="bg-white">
@@ -84,15 +100,26 @@ export default function Hero() {
           {/* Search Fields */}
           <div className="space-y-4">
             {/* Cidade */}
-            <div className="flex items-center gap-3 border border-gray-300 p-4">
+            <div className="flex items-center gap-3 border border-gray-300 p-4 relative">
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <div>
-                <div className="text-sm font-medium text-foreground">Cidade</div>
-                <div className="text-sm text-gray-500">Busque por cidade</div>
-              </div>
+              <select
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                className="w-full bg-transparent text-sm font-medium text-foreground outline-none cursor-pointer appearance-none"
+              >
+                <option value="">Busque por cidade</option>
+                {cities.map((city) => (
+                  <option key={city} value={city.toLowerCase().replace(/\s+/g, "-")}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+              <svg className="w-5 h-5 text-gray-500 absolute right-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
 
             {/* Bairro */}
@@ -142,7 +169,13 @@ export default function Hero() {
 
           {/* Search Button */}
           <div className="mt-6">
-            <button className="w-full bg-primary text-white py-4 px-8 font-semibold text-lg hover:bg-primary-dark transition-colors">
+            <button
+              onClick={() => {
+                const city = selectedCity || "sao-paulo";
+                router.push(`/alugar/imovel/${city}`);
+              }}
+              className="w-full bg-primary text-white py-4 px-8 font-semibold text-lg hover:bg-primary-dark transition-colors"
+            >
               Buscar imóveis
             </button>
           </div>
