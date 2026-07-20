@@ -21,15 +21,15 @@ export default function PopularSearches() {
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
           Buscas mais populares
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-4">
           {searches.map((search, index) => (
             <a
               key={index}
               href={search.href}
-              className="text-gray-700 hover:text-primary hover:bg-gray-50 px-4 py-3 rounded-lg transition-colors text-sm"
+              className="text-gray-800 hover:text-primary transition-colors"
             >
               {search.text}
             </a>
