@@ -56,9 +56,16 @@ export default function CategorySection({
   };
 
   const formatPrice = (price: string) => {
-    const num = parsePrice(price);
-    if (num === 0) return "Consulte";
-    return `R$ ${num.toLocaleString("pt-BR")}`;
+    if (!price) return "Consulte";
+    const cleaned = price.replace(/<[^>]*>/g, "").trim();
+    const match = cleaned.match(/([\d.,]+)/);
+    if (match) {
+      const num = Number(match[1].replace(/\./g, "").replace(",", "."));
+      if (!isNaN(num) && num > 0) {
+        return `R$ ${num.toLocaleString("pt-BR")}`;
+      }
+    }
+    return "Consulte";
   };
 
   return (
@@ -84,11 +91,11 @@ export default function CategorySection({
                 />
 
                 {/* White box overlay */}
-                <div className="absolute top-6 left-6 bg-white p-6 max-w-[280px]">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 leading-tight">
+                <div className="absolute top-6 left-6 bg-white p-6 max-w-[280px] overflow-hidden">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight line-clamp-3">
                     {properties[currentCard]?.titulo_plain || title}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
                     {properties[currentCard]?.bairro
                       ? `${properties[currentCard].bairro} - ${properties[currentCard].cidade}`
                       : description}
