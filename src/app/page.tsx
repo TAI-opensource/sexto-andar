@@ -12,7 +12,7 @@ const categories = [
     description:
       "Encontre casas para comprar e tenha um cantinho só seu. Casas com amplo espaço, área de lazer e localização privilegiada.",
     linkText: "Ver casas à venda",
-    linkHref: "/comprar/imovel/rio-de-janeiro?categoria=Casa",
+    linkHref: "/comprar?categoria=6",
     backgroundImage:
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
     accentColor: "#1b4332",
@@ -23,7 +23,7 @@ const categories = [
     description:
       "Apartamentos modernos com toda a infraestrutura que você precisa. Varanda, academia, salão de festas e muito mais.",
     linkText: "Ver apartamentos à venda",
-    linkHref: "/comprar/imovel/rio-de-janeiro?categoria=Apartamento",
+    linkHref: "/comprar?categoria=1",
     backgroundImage:
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
     accentColor: "#1a365d",
@@ -34,7 +34,7 @@ const categories = [
     description:
       "Galpões comerciais e industriais para seu negócio. Espaços amplos, localização estratégica e ótima acessibilidade.",
     linkText: "Ver galpões à venda",
-    linkHref: "/comprar/imovel/rio-de-janeiro?categoria=Galp%C3%A3o",
+    linkHref: "/comprar?categoria=16",
     backgroundImage:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
     accentColor: "#2d3748",
@@ -45,7 +45,7 @@ const categories = [
     description:
       "Terrenos para construir o imóvel dos seus sonhos. Áreas com infraestrutura, água, luz e esgoto disponível.",
     linkText: "Ver terrenos à venda",
-    linkHref: "/comprar/imovel/rio-de-janeiro?categoria=Terreno",
+    linkHref: "/comprar?categoria=32",
     backgroundImage:
       "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop",
     accentColor: "#3d4f5f",
@@ -56,7 +56,7 @@ const categories = [
     description:
       "Andares corporativos para empresas que buscam localização premium. Salas modernas, infraestrutura completa e endereço nobre.",
     linkText: "Ver andares corporativos",
-    linkHref: "/comprar/imovel/rio-de-janeiro?categoria=Andar%20Corporativo",
+    linkHref: "/comprar?categoria=144",
     backgroundImage:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
     accentColor: "#134e4a",

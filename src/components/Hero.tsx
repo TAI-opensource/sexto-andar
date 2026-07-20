@@ -89,7 +89,7 @@ export default function Hero() {
 
     const queryString = params.toString();
     router.push(
-      `/comprar/imovel/${city}${queryString ? `?${queryString}` : ""}`
+      `/comprar${queryString ? `?${queryString}` : ""}`
     );
   };
 

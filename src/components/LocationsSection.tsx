@@ -4,40 +4,44 @@ export default function LocationsSection() {
   const locations = [
     {
       state: "Rio de Janeiro",
+      stateId: "RJ",
       cities: [
-        { name: "Rio de Janeiro", slug: "rio-de-janeiro" },
-        { name: "São Gonçalo", slug: "sao-goncalo" },
-        { name: "Nova Iguaçu", slug: "nova-iguacu" },
-        { name: "Belford Roxo", slug: "belford-roxo" },
-        { name: "Itaboraí", slug: "itaborai" },
-        { name: "Campos dos Goytacazes", slug: "campos-dos-goytacazes" },
-        { name: "Resende", slug: "resende" },
-        { name: "Magé", slug: "mage" },
+        { name: "Rio de Janeiro" },
+        { name: "São Gonçalo" },
+        { name: "Nova Iguaçu" },
+        { name: "Belford Roxo" },
+        { name: "Itaboraí" },
+        { name: "Campos dos Goytacazes" },
+        { name: "Resende" },
+        { name: "Magé" },
       ],
     },
     {
       state: "São Paulo",
+      stateId: "SP",
       cities: [
-        { name: "São Paulo", slug: "sao-paulo" },
-        { name: "Guarulhos", slug: "guarulhos" },
-        { name: "Campinas", slug: "campinas" },
-        { name: "São Bernardo do Campo", slug: "sao-bernardo-do-campo" },
+        { name: "São Paulo" },
+        { name: "Guarulhos" },
+        { name: "Campinas" },
+        { name: "São Bernardo do Campo" },
       ],
     },
     {
       state: "Paraná",
+      stateId: "PR",
       cities: [
-        { name: "Curitiba", slug: "curitiba" },
-        { name: "Londrina", slug: "londrina" },
-        { name: "Maringá", slug: "maringa" },
+        { name: "Curitiba" },
+        { name: "Londrina" },
+        { name: "Maringá" },
       ],
     },
     {
       state: "Santa Catarina",
+      stateId: "SC",
       cities: [
-        { name: "Florianópolis", slug: "florianopolis" },
-        { name: "Joinville", slug: "joinville" },
-        { name: "Blumenau", slug: "blumenau" },
+        { name: "Florianópolis" },
+        { name: "Joinville" },
+        { name: "Blumenau" },
       ],
     },
   ];
@@ -60,7 +64,7 @@ export default function LocationsSection() {
                 {location.cities.map((city, cityIndex) => (
                   <li key={cityIndex}>
                     <a
-                      href={`/comprar/imovel/${city.slug}`}
+                      href={`/comprar?estado=${location.stateId}`}
                       className="text-gray-600 hover:text-[#1b4332] transition-colors"
                     >
                       Imóveis em {city.name}

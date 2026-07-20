@@ -2,35 +2,35 @@ export default function PopularSearches() {
   const searches = [
     {
       text: "Apartamentos no Rio de Janeiro",
-      href: "/comprar/imovel/rio-de-janeiro?categoria=Apartamento",
-    },
-    {
-      text: "Casas em São Gonçalo",
-      href: "/comprar/imovel/sao-goncalo?categoria=Casa",
-    },
-    {
-      text: "Apartamentos em Nova Iguaçu",
-      href: "/comprar/imovel/nova-iguacu?categoria=Apartamento",
+      href: "/comprar?estado=RJ&categoria=1",
     },
     {
       text: "Casas no Rio de Janeiro",
-      href: "/comprar/imovel/rio-de-janeiro?categoria=Casa",
+      href: "/comprar?estado=RJ&categoria=6",
     },
     {
-      text: "Terrenos em Itaboraí",
-      href: "/comprar/imovel/itaborai?categoria=Terreno",
+      text: "Terrenos no Rio de Janeiro",
+      href: "/comprar?estado=RJ&categoria=32",
     },
     {
-      text: "Galpões em Resende",
-      href: "/comprar/imovel/resende?categoria=Galp%C3%A3o",
+      text: "Galpões no Rio de Janeiro",
+      href: "/comprar?estado=RJ&categoria=16",
     },
     {
-      text: "Apartamentos em Belford Roxo",
-      href: "/comprar/imovel/belford-roxo?categoria=Apartamento",
+      text: "Apartamentos em São Paulo",
+      href: "/comprar?estado=SP&categoria=1",
     },
     {
-      text: "Casas em Magé",
-      href: "/comprar/imovel/mage?categoria=Casa",
+      text: "Casas em São Paulo",
+      href: "/comprar?estado=SP&categoria=6",
+    },
+    {
+      text: "Apartamentos no Paraná",
+      href: "/comprar?estado=PR&categoria=1",
+    },
+    {
+      text: "Casas em Santa Catarina",
+      href: "/comprar?estado=SC&categoria=6",
     },
   ];
 
