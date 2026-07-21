@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase, type UserProperty } from "@/lib/supabase";
+import { formatPrice } from "@/lib/api";
 import ConfirmModal from "@/components/ConfirmModal";
 
 const statusColors: Record<string, string> = {
@@ -176,7 +177,7 @@ export default function CrmDashboard() {
 
               <div className="p-4">
                 <div className="text-lg font-bold text-[#1b4332] mb-1">
-                  {property.preco || "Consulte"}
+                  {formatPrice(property.preco)}
                 </div>
                 <h3 className="font-medium text-gray-900 mb-1 line-clamp-1">{property.titulo}</h3>
                 <p className="text-sm text-gray-500 mb-1">

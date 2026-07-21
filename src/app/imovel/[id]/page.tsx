@@ -172,7 +172,7 @@ export default function PropertyDetailsPage() {
         <div className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto">
             {hasMultiplePhotos ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 lg:h-[520px]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg:h-[520px] overflow-hidden rounded-lg">
                 {/* Main Image */}
                 <div className="relative h-[300px] sm:h-[400px] lg:h-full">
                   <img
@@ -266,7 +266,7 @@ export default function PropertyDetailsPage() {
         </div>
 
         {/* Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Info */}
             <div className="lg:col-span-2">
