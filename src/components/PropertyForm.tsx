@@ -27,6 +27,7 @@ const cidadesPorEstado: Record<string, string[]> = {
     "Vassouras", "Engenheiro Paulo de Frontin", "Mendes", "Quatis",
     "Itaocara", "São Francisco de Itabapoana", "Santo Antônio de Pádua",
     "Cambuci", "Itaperuna", "Laje do Muriaé", "Porciúncula", "Bom Jesus do Itabapoana",
+    "Arraial do Cabo", "Cabo Frio", "São Pedro da Aldeia", "Araruama", "Casimiro de Abreu",
   ],
   SP: [
     "São Paulo", "Guarulhos", "Campinas", "São Bernardo do Campo",
