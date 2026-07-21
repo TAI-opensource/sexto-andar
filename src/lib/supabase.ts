@@ -1,6 +1,19 @@
 import { createClient } from "./supabase/client";
 
-export const supabase = createClient();
+let _client: ReturnType<typeof createClient> | null = null;
+
+function getClient() {
+  if (!_client) {
+    _client = createClient();
+  }
+  return _client;
+}
+
+export const supabase = new Proxy({} as ReturnType<typeof createClient>, {
+  get(_, prop) {
+    return getClient()[prop as keyof ReturnType<typeof createClient>];
+  },
+});
 
 export interface UserProperty {
   id: string;
