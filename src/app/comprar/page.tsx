@@ -92,14 +92,18 @@ function ComprarContent() {
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get("categoria") || "");
   const [selectedState, setSelectedState] = useState(searchParams.get("estado") || "");
   const [selectedSort, setSelectedSort] = useState(searchParams.get("ordena") || "recentes");
+  const [selectedOrigem, setSelectedOrigem] = useState(searchParams.get("origem") || "todas");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const searchParamsStr = searchParams.toString();
 
   useEffect(() => {
     setSelectedCategory(searchParams.get("categoria") || "");
     setSelectedState(searchParams.get("estado") || "");
     setSelectedSort(searchParams.get("ordena") || "recentes");
+    setSelectedOrigem(searchParams.get("origem") || "todas");
     setPage(0);
-  }, [searchParams]);
+  }, [searchParamsStr]);
 
   const bairroFilter = searchParams.get("bairro") || "";
   const precoMax = Number(searchParams.get("preco_max")) || 0;
@@ -147,16 +151,23 @@ function ComprarContent() {
 
         const merged = [...apiItems, ...userItems];
 
-        if (selectedSort === "menor_valor") {
-          merged.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
-        } else if (selectedSort === "maior_valor") {
-          merged.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
-        } else if (selectedSort === "maior_desconto") {
-          merged.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
+        let origemFiltered = merged;
+        if (selectedOrigem === "siena") {
+          origemFiltered = merged.filter((p) => p.id.startsWith("user_"));
+        } else if (selectedOrigem === "caixa") {
+          origemFiltered = merged.filter((p) => !p.id.startsWith("user_"));
         }
-        setProperties(merged);
 
-        let filtered = merged;
+        if (selectedSort === "menor_valor") {
+          origemFiltered.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
+        } else if (selectedSort === "maior_valor") {
+          origemFiltered.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
+        } else if (selectedSort === "maior_desconto") {
+          origemFiltered.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
+        }
+        setProperties(origemFiltered);
+
+        let filtered = origemFiltered;
 
         if (precoMax > 0) {
           filtered = filtered.filter((p) => {
@@ -191,7 +202,7 @@ function ComprarContent() {
 
     fetchProperties();
     return () => { cancelled = true; };
-  }, [selectedSort, page, selectedCategory, selectedState, bairroFilter, precoMax, precoMin, quartosFilter]);
+  }, [selectedSort, page, selectedCategory, selectedState, selectedOrigem, bairroFilter, precoMax, precoMin, quartosFilter]);
 
   const faqItems = [
     {
@@ -282,6 +293,15 @@ function ComprarContent() {
                     </option>
                   ))}
                 </select>
+                <select
+                  value={selectedOrigem}
+                  onChange={(e) => pushFilter("origem", e.target.value)}
+                  className="border border-gray-300 px-4 py-2 text-sm rounded-lg"
+                >
+                  <option value="todas">Todos origens</option>
+                  <option value="siena">Siena</option>
+                  <option value="caixa">Caixa</option>
+                </select>
               </div>
             </div>
           </div>
@@ -352,6 +372,29 @@ function ComprarContent() {
                   </div>
                 </div>
 
+                <div className="mb-6">
+                  <h3 className="font-medium text-foreground mb-3">Origem</h3>
+                  <div className="space-y-2">
+                    {[
+                      { id: "todas", name: "Todas" },
+                      { id: "siena", name: "Siena" },
+                      { id: "caixa", name: "Caixa" },
+                    ].map((o) => (
+                      <label key={o.id} className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="origem"
+                          value={o.id}
+                          checked={selectedOrigem === o.id}
+                          onChange={(e) => pushFilter("origem", e.target.value)}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-sm">{o.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
                 <button
                   onClick={() => router.push("/comprar")}
                   className="w-full border border-gray-300 text-foreground py-2 font-medium hover:bg-gray-50 transition-colors rounded-lg"
@@ -404,6 +447,9 @@ function ComprarContent() {
                             )}
                             <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 text-xs font-medium rounded">
                               {property.transacao}
+                            </div>
+                            <div className={`absolute bottom-2 left-2 px-2 py-1 text-xs font-bold rounded ${property.id.startsWith("user_") ? "bg-[#1b4332] text-white" : "bg-blue-600 text-white"}`}>
+                              {property.id.startsWith("user_") ? "Siena" : "Caixa"}
                             </div>
                           </div>
 
