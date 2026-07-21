@@ -34,4 +34,5 @@ export interface UserProperty {
   referencia: string;
   status: "ativo" | "vendido" | "pausado";
   endereco: string;
+  instagram_url?: string;
 }

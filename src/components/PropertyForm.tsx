@@ -118,7 +118,7 @@ interface PropertyFormProps {
 
 function hasChanges(init: Partial<UserProperty> | undefined, current: Record<string, unknown>): boolean {
   if (!init) return Object.values(current).some((v) => v !== "" && v !== 0 && !(Array.isArray(v) && v.length === 0));
-  const fields: (keyof UserProperty)[] = ["titulo", "descricao", "preco", "categoria", "estado", "cidade", "bairro", "endereco", "quartos", "banheiros", "vagas", "area", "area_terreno", "referencia", "status"];
+  const fields: (keyof UserProperty)[] = ["titulo", "descricao", "preco", "categoria", "estado", "cidade", "bairro", "endereco", "quartos", "banheiros", "vagas", "area", "area_terreno", "referencia", "instagram_url", "status"];
   return fields.some((f) => JSON.stringify(current[f]) !== JSON.stringify(init[f]));
 }
 
@@ -144,6 +144,7 @@ export default function PropertyForm({ initialData, isEdit = false }: PropertyFo
   const [area, setArea] = useState(initialData?.area || 0);
   const [areaTerreno, setAreaTerreno] = useState(initialData?.area_terreno || 0);
   const [referencia, setReferencia] = useState(initialData?.referencia || "");
+  const [instagramUrl, setInstagramUrl] = useState(initialData?.instagram_url || "");
   const [fotos, setFotos] = useState<string[]>(initialData?.fotos || []);
   const [novaFotoUrl, setNovaFotoUrl] = useState("");
   const [status, setStatus] = useState<"ativo" | "vendido" | "pausado">(initialData?.status || "ativo");
@@ -151,7 +152,7 @@ export default function PropertyForm({ initialData, isEdit = false }: PropertyFo
 
   const cidadesDisponiveis = cidadesPorEstado[estado] || [];
 
-  const currentValues = { titulo, descricao, preco, categoria, estado, cidade, bairro, endereco, quartos, banheiros, vagas, area, area_terreno: areaTerreno, referencia, fotos, status };
+  const currentValues = { titulo, descricao, preco, categoria, estado, cidade, bairro, endereco, quartos, banheiros, vagas, area, area_terreno: areaTerreno, referencia, instagram_url: instagramUrl, fotos, status };
   const dirty = hasChanges(initialData, currentValues);
 
   function addFotoUrl() {
@@ -248,6 +249,7 @@ export default function PropertyForm({ initialData, isEdit = false }: PropertyFo
       area,
       area_terreno: areaTerreno,
       referencia: referencia.trim(),
+      instagram_url: instagramUrl.trim() || null,
       fotos,
       status,
     };
@@ -442,6 +444,19 @@ export default function PropertyForm({ initialData, isEdit = false }: PropertyFo
                 placeholder="Código de referência do imóvel"
                 className="w-full md:w-1/2 border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-[#1b4332] focus:border-transparent outline-none"
               />
+            </div>
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Instagram</label>
+              <input
+                type="url"
+                value={instagramUrl}
+                onChange={(e) => setInstagramUrl(e.target.value)}
+                placeholder="https://www.instagram.com/p/... (opcional)"
+                className="w-full md:w-1/2 border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-[#1b4332] focus:border-transparent outline-none"
+              />
+              <p className="text-xs text-gray-400 mt-1">
+                Link da publicação no Instagram deste imóvel. Se não informado, usará o perfil principal.
+              </p>
             </div>
           </div>
 

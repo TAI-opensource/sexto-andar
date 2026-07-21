@@ -60,6 +60,7 @@ export interface Property {
   map_lon: number | null;
   leilao_pracas: unknown[];
   leilao_ativo: boolean;
+  instagram_url?: string;
 }
 
 export interface ApiResponse {
