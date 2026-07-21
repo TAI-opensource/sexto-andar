@@ -191,6 +191,27 @@ export default function PropertyDetailsPage() {
                   <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 text-sm rounded">
                     {currentImage + 1} / {photos.length}
                   </div>
+                  {/* Navigation Arrows */}
+                  <button
+                    type="button"
+                    onClick={() => setCurrentImage((prev) => (prev === 0 ? photos.length - 1 : prev - 1))}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    aria-label="Foto anterior"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentImage((prev) => (prev === photos.length - 1 ? 0 : prev + 1))}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    aria-label="Próxima foto"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </div>
 
                 {/* Thumbnail Grid */}
