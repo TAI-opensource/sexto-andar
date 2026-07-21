@@ -17,10 +17,67 @@ import {
   type Property,
   type SearchFilters,
 } from "@/lib/api";
+import { supabase, type UserProperty } from "@/lib/supabase";
 
 function ComprarContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  function userPropertyToProperty(up: UserProperty): Property {
+    return {
+      id: `user_${up.id}`,
+      id_master: 0,
+      foto: up.fotos?.[0] || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop",
+      fotos: up.fotos || [],
+      categoria: up.categoria || "",
+      categoria_nome: up.categoria || "Imóvel",
+      transacao: "Venda",
+      transacao_tag: "Venda",
+      valor_venda1: up.preco || "",
+      valorLocacao: "",
+      valorLocacaoDia: "",
+      valor_avaliacao_txt: "",
+      precos: [],
+      titulo_linha: up.titulo,
+      titulo_plain: up.titulo,
+      subtitulo_plain: "",
+      referencia_plain: up.referencia || `Siena ${up.id.slice(0, 6)}`,
+      quartos: String(up.quartos || ""),
+      quartos_txt: String(up.quartos || ""),
+      banheiros: String(up.banheiros || ""),
+      banheiros_txt: String(up.banheiros || ""),
+      vagas: String(up.vagas || ""),
+      vagas_txt: String(up.vagas || ""),
+      suites: "",
+      suites_txt: "",
+      area_total: up.area > 0 ? String(up.area) : "",
+      area_total_caixa: "",
+      area_privativa: "",
+      area_privativa_caixa: "",
+      area_util: "",
+      area_terreno: up.area_terreno > 0 ? String(up.area_terreno) : "",
+      area_terreno_caixa: "",
+      area_m2: "",
+      desconto_pct: "",
+      bairro: up.bairro,
+      cidade: up.cidade,
+      estado: up.estado,
+      estadoImovel: "",
+      estado_imovel_txt: "",
+      ref_caixa: "",
+      enderecoPermissao: up.endereco || "",
+      bairroPermissao: "",
+      numeroPermissao: "",
+      descricao_html: up.descricao || "",
+      tipo: "",
+      mostrar_mapa: "",
+      map_geocode_queries: [],
+      map_lat: null,
+      map_lon: null,
+      leilao_pracas: [],
+      leilao_ativo: false,
+    };
+  }
 
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
@@ -65,22 +122,41 @@ function ComprarContent() {
         if (selectedState) searchFilters.estado = selectedState;
         if (bairroFilter) searchFilters.bairro = bairroFilter;
 
-        const data = await searchProperties(searchFilters);
+        const [apiData, supabaseData] = await Promise.all([
+          searchProperties(searchFilters),
+          supabase
+            .from("user_properties")
+            .select("*")
+            .eq("status", "ativo")
+            .then(({ data }) => data || []),
+        ]);
+
         if (cancelled) return;
-        const validItems = (data.items || []).filter(
+
+        const apiItems = (apiData.items || []).filter(
           (p) => p.id && p.id !== "0"
         );
-        const sorted = [...validItems];
-        if (selectedSort === "menor_valor") {
-          sorted.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
-        } else if (selectedSort === "maior_valor") {
-          sorted.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
-        } else if (selectedSort === "maior_desconto") {
-          sorted.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
-        }
-        setProperties(sorted);
+        const userItems = (supabaseData as UserProperty[])
+          .filter((up) => {
+            if (selectedCategory && up.categoria !== categories.find((c) => c.id === selectedCategory)?.name) return false;
+            if (selectedState && up.estado !== selectedState) return false;
+            if (bairroFilter && up.bairro !== bairroFilter) return false;
+            return true;
+          })
+          .map(userPropertyToProperty);
 
-        let filtered = sorted;
+        const merged = [...apiItems, ...userItems];
+
+        if (selectedSort === "menor_valor") {
+          merged.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
+        } else if (selectedSort === "maior_valor") {
+          merged.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
+        } else if (selectedSort === "maior_desconto") {
+          merged.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
+        }
+        setProperties(merged);
+
+        let filtered = merged;
 
         if (precoMax > 0) {
           filtered = filtered.filter((p) => {
@@ -105,7 +181,7 @@ function ComprarContent() {
         }
 
         setFilteredProperties(filtered);
-        setTotal(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filtered.length : data.meta.total);
+        setTotal(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filtered.length : merged.length);
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {

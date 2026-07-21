@@ -16,6 +16,7 @@ import {
   stripHtml,
   type Property,
 } from "@/lib/api";
+import { supabase, type UserProperty } from "@/lib/supabase";
 
 export default function PropertyDetailsPage() {
   const params = useParams();
@@ -30,16 +31,84 @@ export default function PropertyDetailsPage() {
     const fetchProperty = async () => {
       setLoading(true);
       try {
-        const data = await searchProperties({ limite: 100 });
-        const found = data.items.find(
-          (p) => p.id === propertyId
-        );
-        setProperty(found || data.items[0]);
+        if (propertyId.startsWith("user_")) {
+          const realId = propertyId.replace("user_", "");
+          const { data: userData } = await supabase
+            .from("user_properties")
+            .select("*")
+            .eq("id", realId)
+            .single();
 
-        const similar = data.items
-          .filter((p) => p.id !== (found?.id || data.items[0]?.id))
-          .slice(0, 3);
-        setSimilarProperties(similar);
+          if (userData) {
+            const up = userData as UserProperty;
+            const converted: Property = {
+              id: `user_${up.id}`,
+              id_master: 0,
+              foto: up.fotos?.[0] || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
+              fotos: up.fotos || [],
+              categoria: up.categoria || "",
+              categoria_nome: up.categoria || "Imóvel",
+              transacao: "Venda",
+              transacao_tag: "Venda",
+              valor_venda1: up.preco || "",
+              valorLocacao: "",
+              valorLocacaoDia: "",
+              valor_avaliacao_txt: "",
+              precos: [],
+              titulo_linha: up.titulo,
+              titulo_plain: up.titulo,
+              subtitulo_plain: "",
+              referencia_plain: up.referencia || `Siena ${up.id.slice(0, 6)}`,
+              quartos: String(up.quartos || ""),
+              quartos_txt: String(up.quartos || ""),
+              banheiros: String(up.banheiros || ""),
+              banheiros_txt: String(up.banheiros || ""),
+              vagas: String(up.vagas || ""),
+              vagas_txt: String(up.vagas || ""),
+              suites: "",
+              suites_txt: "",
+              area_total: up.area > 0 ? String(up.area) : "",
+              area_total_caixa: "",
+              area_privativa: "",
+              area_privativa_caixa: "",
+              area_util: "",
+              area_terreno: up.area_terreno > 0 ? String(up.area_terreno) : "",
+              area_terreno_caixa: "",
+              area_m2: "",
+              desconto_pct: "",
+              cidade: up.cidade,
+              estado: up.estado,
+              bairro: up.bairro,
+              estadoImovel: "",
+              estado_imovel_txt: "",
+              ref_caixa: "",
+              descricao_html: up.descricao || "",
+              enderecoPermissao: up.endereco || "",
+              bairroPermissao: "",
+              numeroPermissao: "",
+              tipo: "",
+              mostrar_mapa: "",
+              map_geocode_queries: [],
+              map_lat: null,
+              map_lon: null,
+              leilao_pracas: [],
+              leilao_ativo: false,
+            };
+            setProperty(converted);
+            setSimilarProperties([]);
+          }
+        } else {
+          const data = await searchProperties({ limite: 100 });
+          const found = data.items.find(
+            (p) => p.id === propertyId
+          );
+          setProperty(found || data.items[0]);
+
+          const similar = data.items
+            .filter((p) => p.id !== (found?.id || data.items[0]?.id))
+            .slice(0, 3);
+          setSimilarProperties(similar);
+        }
       } catch (error) {
         console.error("Error fetching property:", error);
       } finally {
