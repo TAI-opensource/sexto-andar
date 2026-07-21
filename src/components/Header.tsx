@@ -6,17 +6,61 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-foreground">Siena</span>
+              <span className="text-xl sm:text-2xl font-bold text-foreground">Siena Gestão & Imobiliária</span>
             </a>
           </div>
 
-          {/* Fale Conosco */}
-          <a
-            href="/fale-conosco"
-            className="text-gray-600 hover:text-primary font-medium transition-colors"
-          >
-            Fale Conosco
-          </a>
+          {/* Nav Links */}
+          <nav className="hidden md:flex items-center gap-6">
+            <a
+              href="/comprar"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Comprar
+            </a>
+            <a
+              href="/crm"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Imóveis
+            </a>
+            <a
+              href="https://www.instagram.com/sienagestaoimobiliaria/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Instagram
+            </a>
+            <a
+              href="/fale-conosco"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Fale Conosco
+            </a>
+          </nav>
+
+          {/* Mobile Menu */}
+          <div className="md:hidden flex items-center gap-4">
+            <a
+              href="/comprar"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Comprar
+            </a>
+            <a
+              href="/crm"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Imóveis
+            </a>
+            <a
+              href="/fale-conosco"
+              className="text-gray-600 hover:text-primary font-medium transition-colors text-sm"
+            >
+              Fale Conosco
+            </a>
+          </div>
         </div>
       </div>
     </header>
