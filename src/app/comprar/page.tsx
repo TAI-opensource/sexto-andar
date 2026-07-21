@@ -311,8 +311,8 @@ function ComprarContent() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <div className="lg:col-span-1">
-              <div className="bg-white p-6 border border-gray-200 rounded-lg lg:sticky lg:top-20">
+            <div className="lg:col-span-1 lg:sticky lg:top-20 self-start">
+              <div className="bg-white p-6 border border-gray-200 rounded-lg">
                 <h2 className="text-lg font-bold text-foreground mb-6">
                   Filtros
                 </h2>
