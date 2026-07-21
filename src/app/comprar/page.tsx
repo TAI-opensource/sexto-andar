@@ -84,8 +84,9 @@ function ComprarContent() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [total, setTotal] = useState(0);
+  const [displayTotal, setDisplayTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
+  const [displayPage, setDisplayPage] = useState(0);
   const [filters, setFilters] = useState<SearchFilters>({
     ordena: "recentes",
     pagina: 0,
@@ -104,7 +105,7 @@ function ComprarContent() {
     setSelectedState(searchParams.get("estado") || "");
     setSelectedSort(searchParams.get("ordena") || "recentes");
     setSelectedOrigem(searchParams.get("origem") || "todas");
-    setPage(0);
+    setDisplayPage(0);
   }, [searchParamsStr]);
 
   const bairroFilter = searchParams.get("bairro") || "";
@@ -121,7 +122,6 @@ function ComprarContent() {
         const searchFilters: SearchFilters = {
           ...filters,
           ordena: selectedSort,
-          pagina: page,
         };
 
         if (selectedCategory) searchFilters.categoria = selectedCategory;
@@ -151,7 +151,7 @@ function ComprarContent() {
           })
           .map(userPropertyToProperty);
 
-        const merged = [...apiItems, ...userItems];
+        const merged = [...userItems, ...apiItems];
 
         let origemFiltered = merged;
         if (selectedOrigem === "siena") {
@@ -195,6 +195,7 @@ function ComprarContent() {
 
         setFilteredProperties(filtered);
         setTotal(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filtered.length : merged.length);
+        setDisplayPage(0);
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
@@ -204,7 +205,7 @@ function ComprarContent() {
 
     fetchProperties();
     return () => { cancelled = true; };
-  }, [selectedSort, page, selectedCategory, selectedState, selectedOrigem, bairroFilter, precoMax, precoMin, quartosFilter]);
+  }, [selectedSort, selectedCategory, selectedState, selectedOrigem, bairroFilter, precoMax, precoMin, quartosFilter]);
 
   const faqItems = [
     {
@@ -420,7 +421,9 @@ function ComprarContent() {
               ) : (
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).map((property) => {
+                    {(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties)
+                      .slice(displayPage * 12, (displayPage + 1) * 12)
+                      .map((property) => {
                       const discount = getDiscountPercentage(property);
                       const price = parsePrice(property.valor_venda1);
                       const bedrooms = parseBedrooms(property.quartos);
@@ -513,18 +516,18 @@ function ComprarContent() {
 
                   <div className="mt-8 flex justify-center items-center gap-2">
                     <button
-                      onClick={() => setPage(Math.max(0, page - 1))}
-                      disabled={page === 0}
+                      onClick={() => setDisplayPage(Math.max(0, displayPage - 1))}
+                      disabled={displayPage === 0}
                       className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       ← Anterior
                     </button>
                     <span className="px-4 py-2 text-sm text-gray-600">
-                      Página {page + 1} de {Math.ceil(total / 24)}
+                      Página {displayPage + 1} de {Math.ceil((precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length / 12)}
                     </span>
                     <button
-                      onClick={() => setPage(page + 1)}
-                      disabled={(page + 1) * 24 >= total}
+                      onClick={() => setDisplayPage(displayPage + 1)}
+                      disabled={(displayPage + 1) * 12 >= (precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length}
                       className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Próximo →
