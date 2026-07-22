@@ -129,11 +129,14 @@ function ComprarContent() {
         if (selectedState) searchFilters.estado = selectedState;
         if (bairroFilter) searchFilters.bairro = bairroFilter;
 
-        const supabaseData = await supabase
-          .from("user_properties")
-          .select("*")
-          .eq("status", "ativo")
-          .then(({ data }) => data || []);
+        const [supabaseData, apiData] = await Promise.all([
+          supabase
+            .from("user_properties")
+            .select("*")
+            .eq("status", "ativo")
+            .then(({ data }) => data || []),
+          searchProperties({ ...searchFilters, pagina: 0, limite: 24 }).catch(() => null),
+        ]);
 
         if (cancelled) return;
 
@@ -147,19 +150,15 @@ function ComprarContent() {
           .map(userPropertyToProperty);
 
         const allApiItems: Property[] = [];
-        const perPage = 100;
-        const totalPagesToFetch = 15;
-
-        const firstPage = await searchProperties({ ...searchFilters, pagina: 0, limite: perPage }).catch(() => null);
-        const apiTotal = firstPage?.meta?.total || 0;
-        if (firstPage) {
-          const items = (firstPage.items || []).filter((p) => p.id && p.id !== "0");
-          allApiItems.push(...items);
-          const remainingPages = Math.min(totalPagesToFetch - 1, Math.ceil(apiTotal / perPage) - 1);
-          if (remainingPages > 0) {
+        const apiTotal = apiData?.meta?.total || 0;
+        if (apiData) {
+          const firstItems = (apiData.items || []).filter((p) => p.id && p.id !== "0");
+          allApiItems.push(...firstItems);
+          const pagesToFetch = Math.min(10, Math.ceil(apiTotal / 24) - 1);
+          if (pagesToFetch > 0) {
             const moreResults = await Promise.all(
-              Array.from({ length: remainingPages }, (_, i) => i + 1).map((page) =>
-                searchProperties({ ...searchFilters, pagina: page, limite: perPage }).catch(() => null)
+              Array.from({ length: pagesToFetch }, (_, i) => i + 1).map((page) =>
+                searchProperties({ ...searchFilters, pagina: page, limite: 24 }).catch(() => null)
               )
             );
             for (const data of moreResults) {
