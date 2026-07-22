@@ -147,17 +147,23 @@ function ComprarContent() {
           .map(userPropertyToProperty);
 
         const allApiItems: Property[] = [];
-        let page = 0;
         const perPage = 100;
-        let hasMore = true;
+        const totalPagesToFetch = 20;
+        const pagesToFetch = Array.from({ length: totalPagesToFetch }, (_, i) => i);
+        let apiTotal = 0;
 
-        while (hasMore && !cancelled) {
-          const data = await searchProperties({ ...searchFilters, pagina: page, limite: perPage });
-          const items = (data.items || []).filter((p) => p.id && p.id !== "0");
-          allApiItems.push(...items);
-          const totalPages = Math.ceil((data.meta?.total || 0) / perPage);
-          page++;
-          hasMore = page < totalPages && items.length > 0;
+        const results = await Promise.all(
+          pagesToFetch.map((page) =>
+            searchProperties({ ...searchFilters, pagina: page, limite: perPage }).catch(() => null)
+          )
+        );
+
+        for (const data of results) {
+          if (data) {
+            if (!apiTotal) apiTotal = data.meta?.total || 0;
+            const items = (data.items || []).filter((p) => p.id && p.id !== "0");
+            allApiItems.push(...items);
+          }
         }
 
         if (cancelled) return;
@@ -205,7 +211,8 @@ function ComprarContent() {
         }
 
         setFilteredProperties(filtered);
-        setTotal(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filtered.length : merged.length);
+        const displayTotal = precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filtered.length : Math.max(merged.length, apiTotal);
+        setTotal(displayTotal);
         setDisplayPage(0);
       } catch (error) {
         console.error("Error fetching properties:", error);
