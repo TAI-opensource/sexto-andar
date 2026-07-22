@@ -91,7 +91,7 @@ function ComprarContent() {
   const [filters, setFilters] = useState<SearchFilters>({
     ordena: "recentes",
     pagina: 0,
-    limite: 200,
+    limite: 100,
   });
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get("categoria") || "");
   const [selectedState, setSelectedState] = useState(searchParams.get("estado") || "");
@@ -129,20 +129,14 @@ function ComprarContent() {
         if (selectedState) searchFilters.estado = selectedState;
         if (bairroFilter) searchFilters.bairro = bairroFilter;
 
-        const [apiData, supabaseData] = await Promise.all([
-          searchProperties(searchFilters),
-          supabase
-            .from("user_properties")
-            .select("*")
-            .eq("status", "ativo")
-            .then(({ data }) => data || []),
-        ]);
+        const supabaseData = await supabase
+          .from("user_properties")
+          .select("*")
+          .eq("status", "ativo")
+          .then(({ data }) => data || []);
 
         if (cancelled) return;
 
-        const apiItems = (apiData.items || []).filter(
-          (p) => p.id && p.id !== "0"
-        );
         const userItems = (supabaseData as UserProperty[])
           .filter((up) => {
             if (selectedCategory && up.categoria !== categories.find((c) => c.id === selectedCategory)?.name) return false;
@@ -152,7 +146,23 @@ function ComprarContent() {
           })
           .map(userPropertyToProperty);
 
-        const merged = [...userItems, ...apiItems];
+        const allApiItems: Property[] = [];
+        let page = 0;
+        const perPage = 100;
+        let hasMore = true;
+
+        while (hasMore && !cancelled) {
+          const data = await searchProperties({ ...searchFilters, pagina: page, limite: perPage });
+          const items = (data.items || []).filter((p) => p.id && p.id !== "0");
+          allApiItems.push(...items);
+          const totalPages = Math.ceil((data.meta?.total || 0) / perPage);
+          page++;
+          hasMore = page < totalPages && items.length > 0;
+        }
+
+        if (cancelled) return;
+
+        const merged = [...userItems, ...allApiItems];
 
         let origemFiltered = merged;
         if (selectedOrigem === "siena") {
@@ -423,7 +433,7 @@ function ComprarContent() {
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     {(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties)
-                      .slice(displayPage * 24, (displayPage + 1) * 24)
+                      .slice(displayPage * 12, (displayPage + 1) * 12)
                       .map((property) => {
                       const discount = getDiscountPercentage(property);
                       const price = parsePrice(property.valor_venda1);
@@ -524,11 +534,11 @@ function ComprarContent() {
                       ← Anterior
                     </button>
                     <span className="px-4 py-2 text-sm text-gray-600">
-                      Página {displayPage + 1} de {Math.ceil((precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length / 24)}
+                      Página {displayPage + 1} de {Math.ceil((precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length / 12)}
                     </span>
                     <button
                       onClick={() => setDisplayPage(displayPage + 1)}
-                      disabled={(displayPage + 1) * 24 >= (precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length}
+                      disabled={(displayPage + 1) * 12 >= (precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length}
                       className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Próximo →

@@ -47,9 +47,9 @@ export default function LocationsSection() {
   ];
 
   return (
-    <section className="py-10 lg:py-16 bg-white">
+    <section className="py-10 lg:py-16 bg-[#1b4332]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
           Onde você quiser, tem uma Siena
         </h2>
 
@@ -57,7 +57,7 @@ export default function LocationsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {locations.map((location, index) => (
             <div key={index}>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-6">
                 {location.state}
               </h3>
               <ul className="space-y-3">
@@ -65,7 +65,7 @@ export default function LocationsSection() {
                   <li key={cityIndex}>
                     <a
                       href={`/comprar?estado=${location.stateId}`}
-                      className="text-gray-600 hover:text-[#1b4332] transition-colors"
+                      className="text-green-100 hover:text-white transition-colors"
                     >
                       Imóveis em {city.name}
                     </a>
