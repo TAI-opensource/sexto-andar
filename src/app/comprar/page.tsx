@@ -335,13 +335,13 @@ function ComprarContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1 lg:sticky lg:top-20 self-start">
-              <div className="bg-white p-6 border border-gray-200 rounded-lg">
-                <h2 className="text-lg font-bold text-foreground mb-6">
+              <div className="bg-[#1b4332] p-6 border border-[#1b4332] rounded-lg text-white">
+                <h2 className="text-lg font-bold text-white mb-6">
                   Filtros
                 </h2>
 
                 <div className="mb-6">
-                  <h3 className="font-medium text-foreground mb-3">Categoria</h3>
+                  <h3 className="font-medium text-white mb-3">Categoria</h3>
                   <div className="space-y-2">
                     {categories.map((cat) => (
                       <label key={cat.id} className="flex items-center gap-2">
@@ -353,14 +353,14 @@ function ComprarContent() {
                           onChange={(e) => pushFilter("categoria", e.target.value)}
                           className="w-4 h-4"
                         />
-                        <span className="text-sm">{cat.name}</span>
+                        <span className="text-sm text-white/80">{cat.name}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="font-medium text-foreground mb-3">Estado</h3>
+                  <h3 className="font-medium text-white mb-3">Estado</h3>
                   <div className="space-y-2">
                     {states.map((state) => (
                       <label key={state.id} className="flex items-center gap-2">
@@ -372,14 +372,14 @@ function ComprarContent() {
                           onChange={(e) => pushFilter("estado", e.target.value)}
                           className="w-4 h-4"
                         />
-                        <span className="text-sm">{state.name}</span>
+                        <span className="text-sm text-white/80">{state.name}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="font-medium text-foreground mb-3">Ordenar por</h3>
+                  <h3 className="font-medium text-white mb-3">Ordenar por</h3>
                   <div className="space-y-2">
                     {sortOptions.map((opt) => (
                       <label key={opt.id} className="flex items-center gap-2">
@@ -391,14 +391,14 @@ function ComprarContent() {
                           onChange={(e) => pushFilter("ordena", e.target.value)}
                           className="w-4 h-4"
                         />
-                        <span className="text-sm">{opt.name}</span>
+                        <span className="text-sm text-white/80">{opt.name}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="font-medium text-foreground mb-3">Origem</h3>
+                  <h3 className="font-medium text-white mb-3">Origem</h3>
                   <div className="space-y-2">
                     {[
                       { id: "todas", name: "Todas" },
@@ -414,7 +414,7 @@ function ComprarContent() {
                           onChange={(e) => pushFilter("origem", e.target.value)}
                           className="w-4 h-4"
                         />
-                        <span className="text-sm">{o.name}</span>
+                        <span className="text-sm text-white/80">{o.name}</span>
                       </label>
                     ))}
                   </div>
@@ -422,7 +422,7 @@ function ComprarContent() {
 
                 <button
                   onClick={() => router.push("/comprar")}
-                  className="w-full border border-gray-300 text-foreground py-2 font-medium hover:bg-gray-50 transition-colors rounded-lg"
+                  className="w-full border border-white/30 text-white py-2 font-medium hover:bg-white/10 transition-colors rounded-lg"
                 >
                   Limpar filtros
                 </button>
