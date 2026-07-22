@@ -79,10 +79,11 @@ export default function Hero() {
   const showBedrooms = selectedTypeObj?.hasBedrooms ?? true;
 
   const handleSearch = () => {
-    const city = selectedCity || availableCities[0]?.slug || "rio-de-janeiro";
+    const city = selectedCity || availableCities[0]?.slug || "";
     const params = new URLSearchParams();
 
     if (selectedState) params.set("estado", selectedState);
+    if (city) params.set("cidade", city);
     if (selectedType) params.set("categoria", selectedType);
     if (selectedBedrooms > 0) {
       params.set("quartos", String(selectedBedrooms));

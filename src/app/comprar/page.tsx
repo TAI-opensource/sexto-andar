@@ -110,6 +110,7 @@ function ComprarContent() {
   }, [searchParamsStr]);
 
   const bairroFilter = searchParams.get("bairro") || "";
+  const cidadeFilter = searchParams.get("cidade") || "";
   const precoMax = Number(searchParams.get("preco_max")) || 0;
   const precoMin = Number(searchParams.get("preco_min")) || 0;
   const quartosFilter = Number(searchParams.get("quartos")) || 0;
@@ -127,6 +128,7 @@ function ComprarContent() {
 
         if (selectedCategory) searchFilters.categoria = selectedCategory;
         if (selectedState) searchFilters.estado = selectedState;
+        if (cidadeFilter) searchFilters.cidade = cidadeFilter;
         if (bairroFilter) searchFilters.bairro = bairroFilter;
 
         const [supabaseData, apiData] = await Promise.all([
@@ -227,7 +229,7 @@ function ComprarContent() {
 
     fetchProperties();
     return () => { cancelled = true; };
-  }, [selectedSort, selectedCategory, selectedState, selectedOrigem, bairroFilter, precoMax, precoMin, quartosFilter]);
+  }, [selectedSort, selectedCategory, selectedState, selectedOrigem, cidadeFilter, bairroFilter, precoMax, precoMin, quartosFilter]);
 
   const faqItems = [
     {
