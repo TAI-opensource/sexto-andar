@@ -150,43 +150,43 @@ export default function FaleConoscoPage() {
           </section>
 
           {/* FAQ */}
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <section className="bg-[#1b4332] -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12 rounded-xl">
+            <h2 className="text-2xl font-bold text-white mb-6">
               Dúvidas frequentes
             </h2>
-            <div className="space-y-4">
-              <details className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <summary className="p-6 cursor-pointer font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+            <div className="space-y-3">
+              <details className="bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+                <summary className="p-4 cursor-pointer font-semibold text-white hover:bg-white/5 transition-colors">
                   Como comprar um imóvel?
                 </summary>
-                <div className="px-6 pb-6 text-gray-600">
+                <div className="px-4 pb-4 text-white/80">
                   Encontre o imóvel desejado, clique em &quot;Tenho interesse&quot; e entre em contato com nossos especialistas. Eles irão acompanhar todo o processo de compra com segurança e transparência.
                 </div>
               </details>
 
-              <details className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <summary className="p-6 cursor-pointer font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+              <details className="bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+                <summary className="p-4 cursor-pointer font-semibold text-white hover:bg-white/5 transition-colors">
                   Quais documentos são necessários?
                 </summary>
-                <div className="px-6 pb-6 text-gray-600">
+                <div className="px-4 pb-4 text-white/80">
                   RG ou CNH, CPF, comprovante de renda e endereço. Para financiamento, será necessário extrato bancário e declaração de imposto de renda.
                 </div>
               </details>
 
-              <details className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <summary className="p-6 cursor-pointer font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+              <details className="bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+                <summary className="p-4 cursor-pointer font-semibold text-white hover:bg-white/5 transition-colors">
                   Posso financiar o imóvel?
                 </summary>
-                <div className="px-6 pb-6 text-gray-600">
+                <div className="px-4 pb-4 text-white/80">
                   Sim! Trabalhamos com os principais bancos para oferecer as melhores taxas de financiamento. Consulte nossos especialistas.
                 </div>
               </details>
 
-              <details className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <summary className="p-6 cursor-pointer font-semibold text-gray-900 hover:bg-gray-50 transition-colors">
+              <details className="bg-white/10 border border-white/20 rounded-lg overflow-hidden">
+                <summary className="p-4 cursor-pointer font-semibold text-white hover:bg-white/5 transition-colors">
                   Como funciona o processo de compra?
                 </summary>
-                <div className="px-6 pb-6 text-gray-600">
+                <div className="px-4 pb-4 text-white/80">
                   O processo de compra envolve: pesquisa do imóvel, visita, negociação, análise de documentação, assinatura do contrato e escritura. Nosso time acompanha cada etapa para garantir sua segurança.
                 </div>
               </details>
