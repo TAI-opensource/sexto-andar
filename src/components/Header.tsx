@@ -6,34 +6,29 @@ export default function Header() {
           {/* Logo */}
           <div className="min-w-0 flex-shrink-0">
             <a href="/" className="flex items-center">
-              <span className="text-sm sm:text-lg md:text-xl font-bold text-white truncate">Siena Gestão & Imobiliária</span>
+              <span className="text-sm sm:text-lg md:text-xl font-bold text-white truncate">Siena</span>
             </a>
           </div>
 
           {/* Nav Links - Desktop */}
           <nav className="hidden md:flex items-center gap-6 flex-shrink-0">
+            <a href="/" className="text-white/80 hover:text-white font-medium transition-colors text-sm">
+              Início
+            </a>
             <a href="/comprar" className="text-white/80 hover:text-white font-medium transition-colors text-sm">
               Comprar
-            </a>
-            <a
-              href="https://www.instagram.com/sienagestaoimobiliaria/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/80 hover:text-white font-medium transition-colors text-sm"
-            >
-              Instagram
             </a>
             <a href="/fale-conosco" className="text-white/80 hover:text-white font-medium transition-colors text-sm">
               Fale Conosco
             </a>
           </nav>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden flex items-center gap-3 flex-shrink-0">
-            <a href="/comprar" className="text-white/80 hover:text-white font-medium transition-colors text-xs whitespace-nowrap">
+          {/* Mobile Menu - Hamburger */}
+          <div className="md:hidden flex items-center">
+            <a href="/comprar" className="text-white/80 hover:text-white font-medium transition-colors text-xs mr-4 whitespace-nowrap">
               Comprar
             </a>
-            <a href="/fale-conosco" className="text-white/80 hover:text-white font-medium transition-colors text-xs whitespace-nowrap">
+            <a href="/fale-conosco" className="bg-white text-[#1b4332] px-3 py-1.5 rounded-lg font-medium text-xs whitespace-nowrap hover:bg-white/90 transition-colors">
               Fale Conosco
             </a>
           </div>

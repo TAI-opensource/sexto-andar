@@ -561,21 +561,21 @@ function ComprarContent() {
           </div>
         </div>
 
-        <div className="bg-white border-t border-gray-200 py-12">
+        <div className="bg-[#1b4332] py-12">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-foreground mb-8">
+            <h2 className="text-2xl font-bold text-white mb-8">
               Perguntas frequentes
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {faqItems.map((item, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg">
+                <div key={index} className="bg-white/10 border border-white/20 rounded-lg">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     className="w-full flex items-center justify-between p-4 text-left"
                   >
-                    <span className="font-medium text-foreground">{item.question}</span>
+                    <span className="font-medium text-white">{item.question}</span>
                     <svg
-                      className={`w-5 h-5 text-gray-500 transition-transform ${openFaq === index ? "rotate-180" : ""}`}
+                      className={`w-5 h-5 text-white/70 transition-transform ${openFaq === index ? "rotate-180" : ""}`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -584,7 +584,7 @@ function ComprarContent() {
                     </svg>
                   </button>
                   {openFaq === index && (
-                    <div className="px-4 pb-4 text-gray-600">{item.answer}</div>
+                    <div className="px-4 pb-4 text-white/80">{item.answer}</div>
                   )}
                 </div>
               ))}
