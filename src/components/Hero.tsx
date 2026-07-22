@@ -50,11 +50,11 @@ const statesWithCities = [
 
 const propertyTypes = [
   { label: "Todos os tipos", value: "" },
-  { label: "Apartamento", value: "Apartamento" },
-  { label: "Casa", value: "Casa" },
-  { label: "Galpão", value: "Galpão" },
-  { label: "Terreno", value: "Terreno" },
-  { label: "Andar Corporativo", value: "Andar Corporativo" },
+  { label: "Apartamento", value: "Apartamento", hasBedrooms: true },
+  { label: "Casa", value: "Casa", hasBedrooms: true },
+  { label: "Galpão", value: "Galpão", hasBedrooms: false },
+  { label: "Terreno", value: "Terreno", hasBedrooms: false },
+  { label: "Andar Corporativo", value: "Andar Corporativo", hasBedrooms: false },
 ];
 
 const bedroomOptions = [
@@ -69,19 +69,20 @@ export default function Hero() {
   const router = useRouter();
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-  const [bairro, setBairro] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedBedrooms, setSelectedBedrooms] = useState(0);
 
   const availableCities =
     statesWithCities.find((s) => s.id === selectedState)?.cities || [];
 
+  const selectedTypeObj = propertyTypes.find((t) => t.value === selectedType);
+  const showBedrooms = selectedTypeObj?.hasBedrooms ?? true;
+
   const handleSearch = () => {
     const city = selectedCity || availableCities[0]?.slug || "rio-de-janeiro";
     const params = new URLSearchParams();
 
     if (selectedState) params.set("estado", selectedState);
-    if (bairro) params.set("bairro", bairro);
     if (selectedType) params.set("categoria", selectedType);
     if (selectedBedrooms > 0) {
       params.set("quartos", String(selectedBedrooms));
@@ -221,30 +222,6 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Bairro */}
-              <div className="flex items-center gap-3 border border-gray-200 p-3.5 rounded-xl bg-white hover:border-gray-300 transition-colors">
-                <svg
-                  className="w-5 h-5 text-gray-400 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  value={bairro}
-                  onChange={(e) => setBairro(e.target.value)}
-                  placeholder="Bairro"
-                  className="w-full bg-transparent text-sm text-gray-700 outline-none placeholder-gray-400"
-                />
-              </div>
-
               {/* Tipo */}
               <div className="relative">
                 <div className="flex items-center gap-2 border border-gray-200 p-3.5 rounded-xl bg-white hover:border-gray-300 transition-colors">
@@ -263,7 +240,11 @@ export default function Hero() {
                   </svg>
                   <select
                     value={selectedType}
-                    onChange={(e) => setSelectedType(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedType(e.target.value);
+                      const newType = propertyTypes.find((t) => t.value === e.target.value);
+                      if (!newType?.hasBedrooms) setSelectedBedrooms(0);
+                    }}
                     className="w-full bg-transparent text-sm text-gray-700 outline-none cursor-pointer appearance-none pr-6"
                   >
                     {propertyTypes.map((type, index) => (
@@ -289,44 +270,13 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Quartos + Search */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-              {/* Quartos */}
-              <div className="relative">
-                <div className="flex items-center gap-2 border border-gray-200 p-3.5 rounded-xl bg-white hover:border-gray-300 transition-colors">
-                  <svg
-                    className="w-5 h-5 text-gray-400 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
-                  <select
-                    value={selectedBedrooms}
-                    onChange={(e) =>
-                      setSelectedBedrooms(Number(e.target.value))
-                    }
-                    className="w-full bg-transparent text-sm text-gray-700 outline-none cursor-pointer appearance-none pr-6"
-                  >
-                    {bedroomOptions.map((option, index) => (
-                      <option key={index} value={option.value}>
-                        {option.label === "Qualquer"
-                          ? "Quartos"
-                          : option.label}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              {/* Quartos - só aparece para Apartamento e Casa */}
+              {showBedrooms && (
+                <div className="relative">
+                  <div className="flex items-center gap-2 border border-gray-200 p-3.5 rounded-xl bg-white hover:border-gray-300 transition-colors">
                     <svg
-                      className="w-4 h-4 text-gray-400"
+                      className="w-5 h-5 text-gray-400 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -335,23 +285,51 @@ export default function Hero() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                       />
                     </svg>
+                    <select
+                      value={selectedBedrooms}
+                      onChange={(e) =>
+                        setSelectedBedrooms(Number(e.target.value))
+                      }
+                      className="w-full bg-transparent text-sm text-gray-700 outline-none cursor-pointer appearance-none pr-6"
+                    >
+                      {bedroomOptions.map((option, index) => (
+                        <option key={index} value={option.value}>
+                          {option.label === "Qualquer"
+                            ? "Quartos"
+                            : option.label}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                      <svg
+                        className="w-4 h-4 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Search Button */}
-              <div className="md:col-span-3">
-                <button
-                  onClick={handleSearch}
-                  className="w-full bg-[#1b4332] text-white py-3.5 px-6 font-semibold rounded-xl hover:bg-[#143526] transition-colors"
-                >
-                  Buscar imóveis
-                </button>
-              </div>
+              )}
             </div>
+
+            {/* Search Button */}
+            <button
+              onClick={handleSearch}
+              className="w-full bg-[#1b4332] text-white py-3.5 px-6 font-semibold rounded-xl hover:bg-[#143526] transition-colors"
+            >
+              Buscar imóveis
+            </button>
           </div>
         </div>
       </div>
