@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import CategorySection from "@/components/CategorySection";
 import LocationsSection from "@/components/LocationsSection";
 import PopularSearches from "@/components/PopularSearches";
+import OfficeSection from "@/components/OfficeSection";
 import Footer from "@/components/Footer";
 
 const categories = [
@@ -83,6 +84,7 @@ export default function Home() {
           />
         ))}
         <LocationsSection />
+        <OfficeSection />
         <PopularSearches />
       </main>
       <Footer />
