@@ -91,7 +91,7 @@ function ComprarContent() {
   const [filters, setFilters] = useState<SearchFilters>({
     ordena: "recentes",
     pagina: 0,
-    limite: 24,
+    limite: 200,
   });
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get("categoria") || "");
   const [selectedState, setSelectedState] = useState(searchParams.get("estado") || "");
@@ -423,7 +423,7 @@ function ComprarContent() {
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                     {(precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties)
-                      .slice(displayPage * 12, (displayPage + 1) * 12)
+                      .slice(displayPage * 24, (displayPage + 1) * 24)
                       .map((property) => {
                       const discount = getDiscountPercentage(property);
                       const price = parsePrice(property.valor_venda1);
@@ -524,11 +524,11 @@ function ComprarContent() {
                       ← Anterior
                     </button>
                     <span className="px-4 py-2 text-sm text-gray-600">
-                      Página {displayPage + 1} de {Math.ceil((precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length / 12)}
+                      Página {displayPage + 1} de {Math.ceil((precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length / 24)}
                     </span>
                     <button
                       onClick={() => setDisplayPage(displayPage + 1)}
-                      disabled={(displayPage + 1) * 12 >= (precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length}
+                      disabled={(displayPage + 1) * 24 >= (precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length}
                       className="px-4 py-2 border border-gray-300 hover:border-primary transition-colors rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Próximo →

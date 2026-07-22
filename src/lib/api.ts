@@ -108,7 +108,7 @@ export async function searchProperties(
   const params = new URLSearchParams();
   params.append("ordena", filters.ordena || "recentes");
   params.append("pagina", String(filters.pagina || 0));
-  params.append("limite", String(filters.limite || 24));
+  params.append("limite", String(filters.limite || 200));
   params.append("id_master", "90821645");
 
   if (filters.categoria) {
