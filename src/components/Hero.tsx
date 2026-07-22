@@ -49,12 +49,12 @@ const statesWithCities = [
 ];
 
 const propertyTypes = [
-  { label: "Todos os tipos", value: "" },
-  { label: "Apartamento", value: "Apartamento", hasBedrooms: true },
-  { label: "Casa", value: "Casa", hasBedrooms: true },
-  { label: "Galpão", value: "Galpão", hasBedrooms: false },
-  { label: "Terreno", value: "Terreno", hasBedrooms: false },
-  { label: "Andar Corporativo", value: "Andar Corporativo", hasBedrooms: false },
+  { label: "Todos os tipos", value: "", hasBedrooms: true },
+  { label: "Apartamento", value: "1", hasBedrooms: true },
+  { label: "Casa", value: "6", hasBedrooms: true },
+  { label: "Galpão", value: "16", hasBedrooms: false },
+  { label: "Terreno", value: "32", hasBedrooms: false },
+  { label: "Andar Corporativo", value: "144", hasBedrooms: false },
 ];
 
 const bedroomOptions = [
