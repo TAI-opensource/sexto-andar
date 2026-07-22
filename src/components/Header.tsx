@@ -6,7 +6,7 @@ export default function Header() {
           {/* Logo */}
           <div className="min-w-0 flex-shrink-0">
             <a href="/" className="flex items-center">
-              <span className="text-sm sm:text-lg md:text-xl font-bold text-white truncate">Siena</span>
+              <span className="text-xs sm:text-lg md:text-xl font-bold text-white truncate">Siena Gestão & Imobiliária</span>
             </a>
           </div>
 
