@@ -148,21 +148,26 @@ function ComprarContent() {
 
         const allApiItems: Property[] = [];
         const perPage = 100;
-        const totalPagesToFetch = 20;
-        const pagesToFetch = Array.from({ length: totalPagesToFetch }, (_, i) => i);
-        let apiTotal = 0;
+        const totalPagesToFetch = 15;
 
-        const results = await Promise.all(
-          pagesToFetch.map((page) =>
-            searchProperties({ ...searchFilters, pagina: page, limite: perPage }).catch(() => null)
-          )
-        );
-
-        for (const data of results) {
-          if (data) {
-            if (!apiTotal) apiTotal = data.meta?.total || 0;
-            const items = (data.items || []).filter((p) => p.id && p.id !== "0");
-            allApiItems.push(...items);
+        const firstPage = await searchProperties({ ...searchFilters, pagina: 0, limite: perPage }).catch(() => null);
+        const apiTotal = firstPage?.meta?.total || 0;
+        if (firstPage) {
+          const items = (firstPage.items || []).filter((p) => p.id && p.id !== "0");
+          allApiItems.push(...items);
+          const remainingPages = Math.min(totalPagesToFetch - 1, Math.ceil(apiTotal / perPage) - 1);
+          if (remainingPages > 0) {
+            const moreResults = await Promise.all(
+              Array.from({ length: remainingPages }, (_, i) => i + 1).map((page) =>
+                searchProperties({ ...searchFilters, pagina: page, limite: perPage }).catch(() => null)
+              )
+            );
+            for (const data of moreResults) {
+              if (data) {
+                const items = (data.items || []).filter((p) => p.id && p.id !== "0");
+                allApiItems.push(...items);
+              }
+            }
           }
         }
 
