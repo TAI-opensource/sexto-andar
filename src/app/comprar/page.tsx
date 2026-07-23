@@ -147,35 +147,16 @@ function ComprarContent() {
           .filter((up) => {
             if (selectedCategory && up.categoria !== categories.find((c) => c.id === selectedCategory)?.name) return false;
             if (selectedState && up.estado !== selectedState) return false;
+            if (cidadeFilter && up.cidade !== cidadeFilter) return false;
             if (bairroFilter && up.bairro !== bairroFilter) return false;
             return true;
           })
           .map(userPropertyToProperty);
 
-        const allApiItems: Property[] = [];
+        const apiItems = (apiData?.items || []).filter((p) => p.id && p.id !== "0");
         const apiTotal = apiData?.meta?.total || 0;
-        if (apiData) {
-          const firstItems = (apiData.items || []).filter((p) => p.id && p.id !== "0");
-          allApiItems.push(...firstItems);
-          const pagesToFetch = Math.min(10, Math.ceil(apiTotal / 24) - 1);
-          if (pagesToFetch > 0) {
-            const moreResults = await Promise.all(
-              Array.from({ length: pagesToFetch }, (_, i) => i + 1).map((page) =>
-                searchProperties({ ...searchFilters, pagina: page, limite: 24 }).catch(() => null)
-              )
-            );
-            for (const data of moreResults) {
-              if (data) {
-                const items = (data.items || []).filter((p) => p.id && p.id !== "0");
-                allApiItems.push(...items);
-              }
-            }
-          }
-        }
 
-        if (cancelled) return;
-
-        const merged = [...userItems, ...allApiItems];
+        const merged = [...userItems, ...apiItems];
 
         let origemFiltered = merged;
         if (selectedOrigem === "siena") {
