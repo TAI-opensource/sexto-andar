@@ -36,13 +36,12 @@ export function setCache(key: string, data: unknown, ttl: number = DEFAULT_TTL):
 
   if (isClient()) {
     try {
-      localStorage.setItem(LS_PREFIX + key, JSON.stringify(item));
-    } catch {
-      // localStorage full - clear old entries
-      for (let i = localStorage.length - 1; i >= 0; i--) {
-        const k = localStorage.key(i);
-        if (k?.startsWith(LS_PREFIX)) localStorage.removeItem(k);
+      const serialized = JSON.stringify(item);
+      if (serialized.length < 2 * 1024 * 1024) { // max 2MB per entry
+        localStorage.setItem(LS_PREFIX + key, serialized);
       }
+    } catch {
+      // localStorage full or quota exceeded
     }
   }
 }
