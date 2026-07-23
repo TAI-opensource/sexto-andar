@@ -131,23 +131,23 @@ function ComprarContent() {
     const total = apiData?.meta?.total || 0;
     setApiTotal(total);
 
-    let merged = page === 0 ? [...supabaseItems, ...apiItems] : [...supabaseItems, ...apiItems];
+    let items = page === 0 ? [...supabaseItems, ...apiItems] : apiItems;
 
     if (selectedOrigem === "siena") {
-      merged = merged.filter((p) => p.id.startsWith("user_"));
+      items = items.filter((p) => p.id.startsWith("user_"));
     } else if (selectedOrigem === "caixa") {
-      merged = merged.filter((p) => !p.id.startsWith("user_"));
+      items = items.filter((p) => !p.id.startsWith("user_"));
     }
 
     if (selectedSort === "menor_valor") {
-      merged.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
+      items.sort((a, b) => parsePrice(a.valor_venda1 || "") - parsePrice(b.valor_venda1 || ""));
     } else if (selectedSort === "maior_valor") {
-      merged.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
+      items.sort((a, b) => parsePrice(b.valor_venda1 || "") - parsePrice(a.valor_venda1 || ""));
     } else if (selectedSort === "maior_desconto") {
-      merged.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
+      items.sort((a, b) => getDiscountPercentage(b) - getDiscountPercentage(a));
     }
 
-    return merged;
+    return items;
   };
 
   useEffect(() => {

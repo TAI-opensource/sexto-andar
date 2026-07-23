@@ -1,21 +1,58 @@
-const cache = new Map<string, { data: unknown; expiry: number }>();
-
+const memCache = new Map<string, { data: unknown; expiry: number }>();
+const LS_PREFIX = "siena_cache_";
 const DEFAULT_TTL = 60 * 60 * 1000; // 1 hour
 
+function isClient(): boolean {
+  return typeof window !== "undefined";
+}
+
 export function getCached<T>(key: string): T | null {
-  const item = cache.get(key);
+  if (isClient()) {
+    try {
+      const raw = localStorage.getItem(LS_PREFIX + key);
+      if (raw) {
+        const item = JSON.parse(raw);
+        if (Date.now() < item.expiry) {
+          memCache.set(key, item);
+          return item.data as T;
+        }
+        localStorage.removeItem(LS_PREFIX + key);
+      }
+    } catch {}
+  }
+
+  const item = memCache.get(key);
   if (!item) return null;
   if (Date.now() > item.expiry) {
-    cache.delete(key);
+    memCache.delete(key);
     return null;
   }
   return item.data as T;
 }
 
 export function setCache(key: string, data: unknown, ttl: number = DEFAULT_TTL): void {
-  cache.set(key, { data, expiry: Date.now() + ttl });
+  const item = { data, expiry: Date.now() + ttl };
+  memCache.set(key, item);
+
+  if (isClient()) {
+    try {
+      localStorage.setItem(LS_PREFIX + key, JSON.stringify(item));
+    } catch {
+      // localStorage full - clear old entries
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k?.startsWith(LS_PREFIX)) localStorage.removeItem(k);
+      }
+    }
+  }
 }
 
 export function clearCache(): void {
-  cache.clear();
+  memCache.clear();
+  if (isClient()) {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k?.startsWith(LS_PREFIX)) localStorage.removeItem(k);
+    }
+  }
 }
