@@ -1,3 +1,5 @@
+import { getCached, setCache } from "./cache";
+
 const API_BASE = "https://reidoape.com.br/api";
 
 export interface PriceDetail {
@@ -108,7 +110,7 @@ export async function searchProperties(
   const params = new URLSearchParams();
   params.append("ordena", filters.ordena || "recentes");
   params.append("pagina", String(filters.pagina || 0));
-  params.append("limite", String(filters.limite || 200));
+  params.append("limite", String(filters.limite || 24));
   params.append("id_master", "90821645");
 
   if (filters.categoria) {
@@ -124,6 +126,10 @@ export async function searchProperties(
     params.append("bairro[]", filters.bairro);
   }
 
+  const cacheKey = params.toString();
+  const cached = getCached<ApiResponse>(cacheKey);
+  if (cached) return cached;
+
   const response = await fetch(API_BASE, {
     method: "POST",
     headers: {
@@ -136,7 +142,9 @@ export async function searchProperties(
     throw new Error("Failed to fetch properties");
   }
 
-  return response.json();
+  const data = await response.json();
+  setCache(cacheKey, data, 60 * 60 * 1000); // cache 1 hour
+  return data;
 }
 
 export function parsePrice(priceHtml: string): number {

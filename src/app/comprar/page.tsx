@@ -415,8 +415,18 @@ function ComprarContent() {
 
             <div className="lg:col-span-3">
               {loading ? (
-                <div className="flex items-center justify-center py-20">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="bg-white border border-gray-200 rounded-lg overflow-hidden animate-pulse">
+                      <div className="h-48 bg-gray-200"></div>
+                      <div className="p-4 space-y-3">
+                        <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ) : (precoMax > 0 || precoMin > 0 || quartosFilter > 0 ? filteredProperties : properties).length === 0 ? (
                 <div className="text-center py-20">
@@ -446,6 +456,8 @@ function ComprarContent() {
                               src={property.foto}
                               alt={property.categoria_nome}
                               className="w-full h-full object-cover"
+                              loading="lazy"
+                              decoding="async"
                               onError={(e) => {
                                 (e.target as HTMLImageElement).src =
                                   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop";
